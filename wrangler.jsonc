@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "trivox",
+  "pages_build_output_dir": ".",
+  "compatibility_date": "2026-04-11",
+  "d1_databases": [
+    {
+      "binding": "TRIVOX_DB",
+      "database_name": "trivox-db",
+      "database_id": "YOUR_DATABASE_ID"
+    }
+  ]
+}

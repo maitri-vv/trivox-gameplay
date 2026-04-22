@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trivox</title>
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+<script type="module" src="app.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+<meta name="theme-color" content="#0b1020">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+</head>
+<body>
+
+<model-viewer
+  id="bg-ambient-sphere"
+  class="bg-ambient-sphere"
+src="assets/Flamingo.glb"
+  alt="Ambient 3D background"
+  autoplay
+  auto-rotate
+  interaction-prompt="none"
+  camera-orbit="0deg 75deg 7m"
+  field-of-view="28deg"
+  environment-image="neutral"
+  exposure="1.15"
+  shadow-intensity="0"
+  touch-action="pan-y">
+</model-viewer>
+
+
+<section id="screen-menu" class="screen active">
+  <h1 class="menu-logo">Trivox</h1>
+  <p class="menu-tagline">FLIP & SPOT & MATCH</p>
+  <div class="menu-birds">
+    <span class="menu-bird">🦩</span><span class="menu-bird">🦜</span>
+    <span class="menu-bird">🦩</span><span class="menu-bird">🦜</span>
+  </div>
+  <div class="menu-field">
+    <label for="username-input">Player 1</label>
+    <input class="menu-input" id="username-input" maxlength="18" placeholder="Enter Player 1 name" value="Player1">
+  </div>
+  <div class="menu-field" id="player2-field" style="display:none;">
+    <label for="username-input-2">Player 2</label>
+    <input class="menu-input" id="username-input-2" maxlength="18" placeholder="Enter Player 2 name" value="Player2">
+  </div>
+  <div class="mode-grid" id="mode-grid">
+    <button class="mode-card active" data-mode="classic"><span>Solo</span><strong>Classic</strong><p>Standard memory race with animated 3D birds.</p></button>
+    <button class="mode-card" data-mode="vs-ai"><span>Battle</span><strong>Vs AI</strong><p>You and the AI alternate turns while it remembers revealed cards.</p></button>
+    <button class="mode-card" data-mode="two-player"><span>Couch</span><strong>2 Player</strong><p>Pass-and-play scoring with turn swaps after misses.</p></button>
+    <button class="mode-card" data-mode="time-attack"><span>Rush</span><strong>Time Attack</strong><p>Clear the board before the countdown ends.</p></button>
+  </div>
+  <div class="btn-stack" id="btn-play"><button class="btn-face">Start Playing</button></div>
+  <nav class="menu-nav">
+    <div class="pill"><span id="mode-caption">Classic Mode</span></div>
+    <div class="pill" id="pill-sound"><span>🔊 Sound On</span></div>
+    <div class="pill" id="pill-leaderboard"><span>Leaderboard</span></div>
+  </nav>
+</section>
+
+<section id="screen-game" class="screen">
+  <header class="game-topbar">
+    <div class="topbar-back" id="btn-back"><span>← Back</span></div>
+    <div class="topbar-center">
+      <span class="topbar-score" id="score-label">0 / 8</span>
+      <span class="topbar-timer" id="timer-label">0:00</span>
+      <span class="topbar-mode" id="mode-label">Classic</span>
+      <span class="topbar-turn" id="turn-label">Solo Turn</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+  <div class="topbar-music spotify-topbar-trigger" id="spotify-toggle" aria-expanded="false" aria-controls="spotify-panel">
+  <span id="spotify-icon">
+    <img src="assets/spotifylogo/Spotify_Primary_Logo_RGB_Green.png" alt="Spotify" class="spotify-logo-img">
+  </span>
+</div>
+  <span class="topbar-logo">Trivox</span>
+</div>
+  </header>
+  <div class="card-grid" id="card-grid"></div>
+</section>
+
+<div class="motion-focus-backdrop" id="motion-focus-backdrop"></div>
+<div class="motion-preview-zone" id="motion-preview-zone"></div>
+<div class="motion-floating-layer" id="motion-floating-layer"></div>
+
+<div id="win-overlay">
+  <div class="win-confetti">🎉</div>
+  <div class="win-title" id="win-title">You Won!</div>
+  <div class="win-sub" id="win-stat">8 pairs · 0:42</div>
+  <div class="btn-stack" id="btn-replay" style="margin-bottom:0;"><button class="btn-face">Play Again</button></div>
+</div>
+<div id="combo-flash"></div>
+<div class="leaderboard-overlay" id="leaderboard-overlay">
+  <div class="leaderboard-card">
+    <div class="leaderboard-head">
+      <div>
+        <div class="leaderboard-title">Top 10</div>
+        <div class="leaderboard-sub">Fastest players stay on top</div>
+      </div>
+      <div class="topbar-back" id="btn-close-leaderboard"><span>Close</span></div>
+    </div>
+    <div class="leaderboard-list" id="leaderboard-list"></div>
+  </div>
+</div>
+<div class="spotify-dock" id="spotify-dock">
+  <div class="spotify-panel" id="spotify-panel" aria-hidden="true">
+    <div class="spotify-panel-head">
+      <span class="spotify-panel-title">Trivox Playlist</span>
+      <button class="spotify-close" id="spotify-close" type="button" aria-label="Close music player">×</button>
+    </div>
+
+    <iframe
+      class="spotify-frame"
+      src="https://open.spotify.com/embed/playlist/1hWwefgnjccFLAnXwIkvim?utm_source=generator&theme=0"
+      width="100%"
+      height="152"
+      frameborder="0"
+      allowfullscreen=""
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy">
+    </iframe>
+  </div>
+</div>
+</body>
+</html>
